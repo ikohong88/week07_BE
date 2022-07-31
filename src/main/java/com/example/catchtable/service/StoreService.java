@@ -49,7 +49,7 @@ public class StoreService {
         } 
         // 가게 이름 검색 기능 - 카테고리로 해야되는건가??
         else if (word != null) {
-            stores = storeRepository.findByStorename(word);
+            stores = storeRepository.findByStorenameIsContaining(word);
         }
         List<StoreResponseDto> result = new ArrayList<>();
         for(Store store : stores) {

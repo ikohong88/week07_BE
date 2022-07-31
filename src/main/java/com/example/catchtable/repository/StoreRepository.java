@@ -13,7 +13,9 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     List<Store> findAllByOrderByIdDesc();
     // 오름차순
     List<Store> findAllByOrderByIdAsc();
-    List<Store> findByStorename(String storename);
+    
+    // 가게 이름 검색 - Like 적용
+    List<Store> findByStorenameIsContaining(String storename);
     // minPrice, maxPrice 사이값 조회
     List<Store> findAllByIdBetween(Integer minPrice, Integer maxPrice);
     Optional<Store> findById(Long id);
