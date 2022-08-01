@@ -15,10 +15,9 @@ import java.util.List;
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
 @AllArgsConstructor
 public class User extends Timestamped{
-    // ID가 자동으로 생성 및 증가합니다.
-    // @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id // -> 이걸 PK로 하겠다 이 뜻
-    @Column(nullable = false, unique = true) // 이건가? 생각하고있습니다
+
+    @Id
+    @Column(name = "user_id",nullable = false, unique = true) // 이건가? 생각하고있습니다
     private String id;
 
     @Column(nullable = false, unique = true)
