@@ -1,6 +1,5 @@
 package com.example.catchtable.service;
 
-import com.example.catchtable.dto.user.IdCheckDto;
 import com.example.catchtable.dto.user.MyPageResponseDto;
 import com.example.catchtable.dto.user.MyPageUpdateDto;
 import com.example.catchtable.dto.user.SignUpRequestDto;
@@ -12,9 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.management.relation.Role;
-import javax.persistence.RollbackException;
 
 @Service
 @RequiredArgsConstructor
@@ -75,8 +71,8 @@ public class UserService {
     }
 
     // ID 중복확인
-    public ResponseEntity<?> users(IdCheckDto checkDto) {
-        if (userRepository.findById(checkDto.getId()).isPresent())
+    public ResponseEntity<?> users(String checkDto) {
+        if (userRepository.findById(checkDto).isPresent())
             return new ResponseEntity<>("중복된 ID입니다" , HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>("사용가능한 ID입니다", HttpStatus.OK);
     }

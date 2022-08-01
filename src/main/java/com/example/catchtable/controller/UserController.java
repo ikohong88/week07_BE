@@ -1,16 +1,12 @@
 package com.example.catchtable.controller;
 
-import com.example.catchtable.dto.user.IdCheckDto;
 import com.example.catchtable.dto.user.SignUpRequestDto;
-import com.example.catchtable.model.User;
 import com.example.catchtable.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -31,9 +27,9 @@ public class UserController {
 
 
     // 회원가입 - ID 중복체크
-    @PostMapping("/api/users/{id}")
-    public ResponseEntity<?>users(@RequestBody IdCheckDto checkDto) {
-        return userService.users(checkDto);
+    @GetMapping("/api/users/{id}")
+    public ResponseEntity<?>users(@PathVariable String id) {
+        return userService.users(id);
     }
 
 
