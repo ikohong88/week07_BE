@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter // get 함수를 일괄적으로 만들어줍니다.
@@ -14,7 +15,7 @@ import java.util.List;
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String storename;
@@ -28,4 +29,7 @@ public class Store {
 
     @OneToOne(mappedBy = "store")
     private StoreReviewInfo storeReviewInfo;
+
+    @OneToMany(mappedBy = "store")
+    private List<Review> reviews = new ArrayList<>();
 }
