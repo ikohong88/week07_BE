@@ -15,6 +15,9 @@ public class ReservationResponseDto {
     private Long id;
 //    private String userId;
     private Long storeId;
+    private String username;
+    private String storename;
+
     private Date date;
     private Integer members; // member? members?
 
@@ -23,5 +26,10 @@ public class ReservationResponseDto {
         this.storeId = reservation.getStoreId();
         this.date = reservation.getDate();
         this.members = reservation.getMembers();
+//        this.userId = reservation.getUser().getId();
+//        this.storeId = reservation.getStore().getId();
+//        this.username = reservation.getUser().getUsername();
+//        this.storename = reservation.getStore().getStorename();
+//        this.date = ?
     }
 }

@@ -45,6 +45,9 @@ public class Store {
     // 외래키 생성하지 않고, 양방향 연관관계를 형성하기 위한 코드
     @OneToOne(mappedBy = "store")
     private StoreReviewInfo storeReviewInfo;
+    
+    @OneToMany(mappedBy = "store")
+    private List<Review> reviews = new ArrayList<>();
 
     // 예약 연관관계 생성
     public void addReservation(Reservation reservation) {
@@ -61,5 +64,4 @@ public class Store {
         if(storeImageURL.getStore()!=this)
             storeImageURL.updateStore(this);
     }
-
 }
