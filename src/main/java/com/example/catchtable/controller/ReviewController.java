@@ -38,7 +38,7 @@ public class ReviewController {
     }
 
     // (가게) 리뷰 목록
-    @GetMapping("/api/stores/{id}")
+    @GetMapping("/api/reviews/stores/{id}")
     public List<ReviewResponseDto> getStoreReviews(@PathVariable Long id) {
         return reviewService.getStoreReviews(id);
     }
