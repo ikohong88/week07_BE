@@ -1,5 +1,6 @@
 package com.example.catchtable.controller;
 
+import com.example.catchtable.dto.RestApi;
 import com.example.catchtable.dto.StoreImageDto;
 import com.example.catchtable.dto.store.StoreResponseDto;
 import com.example.catchtable.service.StoreService;
@@ -36,7 +37,7 @@ public class StoreController {
 
     // 가게 이미지 등록
     @PostMapping("/api/stores/{id}/images")
-    public void postStoreImageURL(@RequestBody StoreImageDto storeImageDto, @PathVariable Long id) {
-        storeService.createStoreImageURL(storeImageDto,id);
+    public RestApi postStoreImageURL(@RequestBody StoreImageDto storeImageDto, @PathVariable Long id) {
+        return storeService.createStoreImageURL(storeImageDto,id);
     }
 }

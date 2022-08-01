@@ -1,6 +1,7 @@
 package com.example.catchtable.service;
 
 
+import com.example.catchtable.dto.RestApi;
 import com.example.catchtable.dto.StoreImageDto;
 import com.example.catchtable.dto.reservation.ReservationResponseDto;
 import com.example.catchtable.dto.store.StoreResponseDto;
@@ -10,6 +11,7 @@ import com.example.catchtable.model.StoreImageURL;
 import com.example.catchtable.repository.StoreImageRepository;
 import com.example.catchtable.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,18 +82,21 @@ public class StoreService {
                 storeImageDtos.add(storeImageDto);
             }
         }
-
         return new StoreResponseDto(store, reservationResponseDtos, storeImageDtos);
     }
 
     // 가게 이미지 등록
     @Transactional
-    public void createStoreImageURL(StoreImageDto storeImageDto,Long id) {
+    public RestApi createStoreImageURL(StoreImageDto storeImageDto, Long id) {
         Store store  = storeRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("점포를 찾을수가 없습니다.")
         );
         StoreImageURL storeImageURL = new StoreImageURL(storeImageDto);
         store.addStoreImageURL(storeImageURL);
         storeImageRepository.save(storeImageURL);
+
+        String Message = "이미지 등록이 완료되었습니다.";
+        HttpStatus httpStatus = HttpStatus.OK;
+        return new RestApi(Message, httpStatus);
     }
 }
