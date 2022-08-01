@@ -14,6 +14,7 @@ public class StoreReviewInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "store_review_info_id")
     private Long id;
 
     @OneToOne(optional = false, fetch = FetchType.LAZY)

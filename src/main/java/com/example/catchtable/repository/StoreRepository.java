@@ -7,15 +7,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
-//    List<Store> findAllByOrderByCreatedAtDesc();
-    
+
+
+
     // 추천순, 별점순, 리뷰 많은 순, 가격 높은 순, 가격 낮은 순
     
     // 필터없을시 전체 조회 - 내림차순
     List<Store> findAllByOrderByIdDesc();
     // 오름차순
     List<Store> findAllByOrderByIdAsc();
-    
+
     // 가게 이름 검색 - Like 적용
     List<Store> findByStorenameIsContaining(String storename);
     // minPrice, maxPrice 사이값 조회

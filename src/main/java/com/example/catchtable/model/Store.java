@@ -16,6 +16,7 @@ import java.util.List;
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "store_id")
     private Long id;
 
     @Column(nullable = false, unique = true)

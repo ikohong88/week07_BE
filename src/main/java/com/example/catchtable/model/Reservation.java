@@ -21,13 +21,14 @@ import static javax.persistence.FetchType.*;
 public class Reservation extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "reservation_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user; // 사용자 우선적으로 등록된 다음, 해당 ID값이 있어야 등록이 되는점 기억할것
 
-    // store_id 외래키가 존재함으로, Store,Reservation 의 주인이라 보면 된디.
+//     store_id 외래키가 존재함으로, Store,Reservation 의 주인이라 보면 된디.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="STORE_ID")
     private Store store;  // 가게가 우선적으로 등록된 다음, 해당 ID값이 있어야 등록이 되는점 기억할것
@@ -38,7 +39,6 @@ public class Reservation extends Timestamped{
 
     @Column(nullable = false)
     private Date date;
-//    private Long storeId;
 
     @Column(nullable = false)
     private Integer members;

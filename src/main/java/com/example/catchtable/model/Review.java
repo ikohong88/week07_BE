@@ -17,6 +17,7 @@ public class Review extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "review_id")
     private Long id;
 
     @Column(nullable = false)
