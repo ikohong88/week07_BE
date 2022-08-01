@@ -43,6 +43,13 @@ public class User extends Timestamped{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reservation> reservations = new ArrayList<>();
 
+    public User(String id, String pw, String username, String role) {
+        this.id = id;
+        this.pw = pw;
+        this.username = username;
+        this.role = role;
+    }
+
     public void updateUser(MyPageUpdateDto myPageUpdateDto) {
         this.username = myPageUpdateDto.getUsername();
         this.profileUrl = myPageUpdateDto.getProfileUrl();

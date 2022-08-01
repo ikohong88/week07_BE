@@ -19,7 +19,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MyPageController {
 
-    //    private final S3Service s3Service;
     private final UserService userService;
 
     // 마이페이지
