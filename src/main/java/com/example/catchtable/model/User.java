@@ -41,4 +41,11 @@ public class User extends Timestamped{
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
+
+    public User (String id,String pw, String username ) {
+        this.id = id;
+        this.pw = pw;
+        this.username = username;
+    }
+
 }
