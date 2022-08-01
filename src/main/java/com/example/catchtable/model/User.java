@@ -1,10 +1,12 @@
 package com.example.catchtable.model;
 
+import com.example.catchtable.dto.user.MyPageUpdateDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,8 +39,20 @@ public class User extends Timestamped{
     private String role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Reservation> reservations;
+    private List<Reservation> reservations = new ArrayList<>();
+
+    public void updateUser(MyPageUpdateDto myPageUpdateDto) {
+        this.username = myPageUpdateDto.getUsername();
+        this.profileUrl = myPageUpdateDto.getProfileUrl();
+        this.description = myPageUpdateDto.getDescription();
+        this.region = myPageUpdateDto.getRegion();
+        this.phone = myPageUpdateDto.getPhone();
+        this.gender = myPageUpdateDto.getGender();
+        this.birth = myPageUpdateDto.getBirth();
+        this.priceMin = myPageUpdateDto.getPriceMin();
+        this.priceMax = myPageUpdateDto.getPriceMax();
+    }
 }
