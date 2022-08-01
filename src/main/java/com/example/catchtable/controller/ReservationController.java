@@ -26,19 +26,25 @@ public class ReservationController {
 //    @DeleteMapping(/api/reservation/{id})
 //
 
-    // 사용자 예약 목록 불러오기
+    // 사용자 그동안 예약 목록 불러오기
     @GetMapping("/api/users/reservations")
-    public List<ReservationResponseDto> getAllReservations(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return reservationService.getAllReservations(userDetails.getUser().getId());
+    public List<ReservationResponseDto> getUserReservations(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return reservationService.getUserReservations(userDetails.getUser().getId());
     }
 
-    // 사용자 예약 상세 보기
-//    @GetMapping("/api/users/reservations/{storeId}")
-//    public ReservationResponseDto getReservationDtl(@PathVariable Long storeId,
-//                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        String userId = userDetails.getUser().getId();
-//        return reservationService.getReservationDtl(storeId, userId);
-//    }
+    // 예약 상세 보기
+    @GetMapping("/api/users/reservations/{reservationId}")
+    public ReservationResponseDto getReservationDtl(@PathVariable Long reservationId,
+                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        String userId = userDetails.getUser().getId();
+        return reservationService.getReservationDtl(reservationId, userId);
+    }
 
+    // 가게 예악된 목록 불러오기
+    @GetMapping("/api/store/reservations/{storeId}")
+    public List<ReservationResponseDto> getStoreReservations(@PathVariable Long storeId,
+                                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return reservationService.getStoreReservations(storeId, userDetails.getUser().getId());
+    }
 }
 

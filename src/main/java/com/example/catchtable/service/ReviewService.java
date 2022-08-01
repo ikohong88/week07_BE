@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -82,4 +83,13 @@ public class ReviewService {
         return reviewResponseDtos;
     }
 
+    /**
+     * 리뷰 상세 보기
+     */
+    public ReviewResponseDto getReviewDtl(Long reviewId) {
+
+        Review review = reviewRepository.findById(reviewId).orElseThrow(
+                () -> new NullPointerException("존재하지 않는 리뷰입니다."));
+        return new  ReviewResponseDto(review);
+    }
 }

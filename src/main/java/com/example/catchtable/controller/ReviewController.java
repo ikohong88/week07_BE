@@ -43,4 +43,9 @@ public class ReviewController {
         return reviewService.getStoreReviews(id);
     }
 
+    // 리뷰 상세 보기
+    @GetMapping("/api/reviews/{reviewId}")
+    public ReviewResponseDto getReviewDtl(@PathVariable Long reviewId) {
+        return reviewService.getReviewDtl(reviewId);
+    }
 }

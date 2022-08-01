@@ -24,12 +24,10 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
 
-    private final StoreRepository storeRepository;
-
     /**
      * 사용자 예약 목록
      */
-    public List<ReservationResponseDto> getAllReservations(String userId) {
+    public List<ReservationResponseDto> getUserReservations(String userId) {
 
         // 사용자 확인
         User user = userRepository.findById(userId).orElseThrow(
@@ -47,24 +45,21 @@ public class ReservationService {
         return reservationResponseDtos;
     }
 
-    /**
-     *  (사용자) 예약 상세보기
-     */
-//    public ReservationResponseDto getReservationDtl(Long storeId, String userId) {
+//    public List<ReservationResponseDto> getStoreReservations(Long storeId, String id) {
 //
-//        // 사용자 확인
+//    }
+
+    /**
+     * (사용자) 예약 상세보기
+     */
+    public ReservationResponseDto getReservationDtl(Long reservationId, String userId) {
+
+        // 사용자 확인
 //        User user = userRepository.findById(userId).orElseThrow(
 //                () -> new NullPointerException("존재하지 않는 회원입니다."));
-//        // 예약 확인
-////        Reservation reservation = reservationRepository.findByUser(user).orElseThrow(
-////                () -> new NullPointerException("존재하지 않는 회원입니다."));
-//
-//        // 가게 확인
-//        Store store = storeRepository.findById(storeId).orElseThrow(
-//                () -> new NullPointerException("존재하지 않는 가게입니다."));
-//
-//        if(userId == store.ge)
-//
-//        return new ReservationResponseDto(reservation);
-//    }
+        // 예약 확인
+        Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(
+                () -> new NullPointerException("존재하지 않는 회원입니다."));
+        return new ReservationResponseDto(reservation);
+    }
 }
