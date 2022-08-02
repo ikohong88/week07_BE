@@ -66,7 +66,7 @@ public class StoreService {
             }
             // 리뷰 갯수 순
             else if (sort.equals("reviewCount")) {
-                stores = storeRepository.findAllByOOrderByReviewCountDesc();
+                stores = storeRepository.findAllByOrderByReviewCountDesc();
             }
         }
         // 가게 이름 검색 기능 - 카테고리로 해야되는건가??

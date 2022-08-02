@@ -18,7 +18,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     // 리뷰 평점 순
     List<Store> findAllByOrderByReviewAvgDesc();
     // 리뷰 갯수 순
-    List<Store> findAllByOOrderByReviewCountDesc();
+    List<Store> findAllByOrderByReviewCountDesc();
 
     // 카테고리별 가게 조회
     List<Store> findByCategoryIsContaining(String category);
