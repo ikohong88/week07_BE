@@ -1,6 +1,7 @@
 package com.example.catchtable.model;
 
 import com.example.catchtable.dto.user.MyPageUpdateDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,6 @@ import java.util.List;
 @Getter // get 함수를 일괄적으로 만들어줍니다.
 @Entity // DB 테이블 역할을 합니다.
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
-@AllArgsConstructor
 public class User extends Timestamped{
 
     @Id
@@ -37,7 +37,8 @@ public class User extends Timestamped{
     @Column(nullable = false)
     private String role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
