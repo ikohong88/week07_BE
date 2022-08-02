@@ -1,6 +1,7 @@
 package com.example.catchtable.model;
 
 import com.example.catchtable.dto.user.MyPageUpdateDto;
+import com.example.catchtable.dto.user.SignUpRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class User extends Timestamped{
     @Column(name = "user_id",nullable = false, unique = true) // 이건가? 생각하고있습니다
     private String id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
@@ -61,4 +62,5 @@ public class User extends Timestamped{
         this.priceMin = myPageUpdateDto.getPriceMin();
         this.priceMax = myPageUpdateDto.getPriceMax();
     }
+
 }

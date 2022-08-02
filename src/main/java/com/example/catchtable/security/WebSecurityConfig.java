@@ -89,10 +89,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthFilter jwtFilter() throws Exception {
         List<String> skipPathList = new ArrayList<>();
 
+        // 로그인, 중복체크 허용
         skipPathList.add("POST,/api/login");
+        skipPathList.add("POST,/api/signin");
         skipPathList.add("POST,/api/signup");
 
-        skipPathList.add("GET,//api/users/**");
+        // 회원가입 허용
+        skipPathList.add("GET,/api/users/**");
+
+        // 회원 탈퇴 허용
+        skipPathList.add("DELETE,/api/users/**");
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
@@ -111,6 +117,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
+
 
 
     // cors 허용
@@ -153,4 +160,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        source.registerCorsConfiguration("/**", configuration);
 //        return source;
 //    }
+
 }

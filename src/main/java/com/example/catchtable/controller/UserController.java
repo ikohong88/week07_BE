@@ -1,6 +1,7 @@
 package com.example.catchtable.controller;
 
 import com.example.catchtable.dto.user.SignUpRequestDto;
+import com.example.catchtable.model.User;
 import com.example.catchtable.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,16 +34,13 @@ public class UserController {
     }
 
 
-
-//    // 로그인(써큐리티 이용)
-//    @PostMapping("/api/signin")
+    // 로그인(Security 이용) = ("/api/signin")
 
 
 
-////    // 회원 탈퇴
-//    @DeleteMapping("/api/users")
-//    public ResponseEntity<?> delete() {
-//    }
+    // 회원 탈퇴
+    @DeleteMapping("/api/users/{id}")
+    public ResponseEntity<?> delete()
 
 
 
