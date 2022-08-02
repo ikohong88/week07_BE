@@ -16,7 +16,7 @@ import java.util.List;
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "store_id")
+    @Column(name = "STORE_ID")
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -33,7 +33,8 @@ public class Store {
     private Float lng; // 경도
 
     @Column
-    private Float reviewAvg;
+    private String reviewAvg;
+    private Integer reviewCount;
 
     // 여기에서는 외래키를 생성하는것이 아닌, 양방향 연관관계를 만들기위한 코드이다.
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -46,8 +47,9 @@ public class Store {
     // 외래키 생성하지 않고, 양방향 연관관계를 형성하기 위한 코드
     @OneToOne(mappedBy = "store")
     private StoreReviewInfo storeReviewInfo;
-    
-    @OneToMany(mappedBy = "store")
+
+    // 외래키 생성하지 않고, 양방향 연관관계를 형성하기 위한 코드
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
 
     // 예약 연관관계 생성
@@ -64,5 +66,13 @@ public class Store {
         // 무한 후프에 빠지지 않기 위해서 작성
         if(storeImageURL.getStore()!=this)
             storeImageURL.updateStore(this);
+    }
+
+    // 리뷰 연관관계 생성
+    public void addReview(Review review) {
+        this.reviews.add(review);
+        // 무한 후프에 빠지지 않기 위해서 작성
+        if(review.getStore()!=this)
+            review.updateStore(this);
     }
 }
