@@ -21,14 +21,14 @@ public class MyPageController {
 
     private final UserService userService;
 
-    // 마이페이지
+    // 마이페이지  --> OK
     @GetMapping("/api/users")
     public MyPageResponseDto getMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         String userId = userDetails.getUser().getId();
         return userService.getMyPage(userId);
     }
 
-    // 유저정보 수정
+    // 유저정보 수정 --> OK --> validation 설정해야함
     @PatchMapping("/api/users")
     public MyPageResponseDto updateMyPage(@RequestBody MyPageUpdateDto myPageUpdateDto,
                                           @AuthenticationPrincipal UserDetailsImpl userDetails) {

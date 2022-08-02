@@ -47,15 +47,6 @@ public class UserService {
         return new MyPageResponseDto(myPageUpdateDto, foundUer);
     }
 
-    public final UserRepository userRepository;
-    public final BCryptPasswordEncoder passwordEncoder;
-
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-
     // 회원가입
     @Transactional
     public void signup(SignUpRequestDto requestDto) {
@@ -63,7 +54,7 @@ public class UserService {
         String pw = passwordEncoder.encode(requestDto.getPw());
         String username = requestDto.getUsername();
 
-        User user =new User(id, pw, username);
+        User user =new User(id, pw, username, "ROLE_USER");
         if (userRepository.findById(id).isPresent()){
             throw new IllegalArgumentException("이미 존재하는 아이디 입니다.");
         }

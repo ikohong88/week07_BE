@@ -27,6 +27,7 @@ public class ReservationService {
     private final StoreRepository storeRepository;
 
     // 예약하기
+    @Transactional
     public RestApi createReservation(ReservationRequestDto requestDto, Long storeId) {
         Store store = storeRepository.findById(storeId).orElseThrow(
                 () -> new IllegalArgumentException("점포를 찾을수가 없습니다.")
