@@ -86,10 +86,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthFilter jwtFilter() throws Exception {
         List<String> skipPathList = new ArrayList<>();
 
-        skipPathList.add("POST,/api/login");
         skipPathList.add("POST,/api/signup");
+        skipPathList.add("POST,/api/signin");
 
-        skipPathList.add("GET,/");
+        skipPathList.add("GET,/**");
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(

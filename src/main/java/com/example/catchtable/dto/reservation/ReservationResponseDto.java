@@ -29,19 +29,8 @@ public class ReservationResponseDto {
         this.storeId = reservation.getStore().getId();
         this.username = reservation.getUser().getUsername();
         this.storename = reservation.getStore().getStorename();
+        this.storeId = reservation.getStore().getId();
         this.date = reservation.getDate();
         this.members = reservation.getMembers();
     }
-
-//    public ReservationResponseDto(Reservation reservation) { // 우석님이 작성했던 코드인데 똑같아요!
-//        this.id = reservation.getId();
-//        this.storeId = reservation.getStoreId();
-//        this.date = reservation.getDate();
-//        this.members = reservation.getMembers();
-////        this.userId = reservation.getUser().getId();
-////        this.storeId = reservation.getStore().getId();
-////        this.username = reservation.getUser().getUsername();
-////        this.storename = reservation.getStore().getStorename();
-////        this.date = ?
-//    }
 }

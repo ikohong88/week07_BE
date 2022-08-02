@@ -34,8 +34,8 @@ public class Reservation extends Timestamped{
     private Store store;  // 가게가 우선적으로 등록된 다음, 해당 ID값이 있어야 등록이 되는점 기억할것
 
     // 외래키를 조회할 수 있도록 필드에 추가했지만, 외래키는 함부로 변경되면 영속 객체의 정합성이 깨지므로, update, insert 옵션 false
-    @Column(name = "STORE_ID", insertable = false, updatable = false)
-    private Long storeId;
+//    @Column(name = "STORE_ID", insertable = false, updatable = false)
+//    private Long storeId;
 
     @Column(nullable = false)
     private Date date;
@@ -49,12 +49,20 @@ public class Reservation extends Timestamped{
         this.members = requestDto.getMembers();
     }
 
-    // 연관 관계 설정
+    // 연관 관계 설정 - 가게
     public void updateStore(Store store) {
         this.store = store;
         // 무한 루프에 빠지지 않기 위해 작성
         if(!store.getReservations().contains(this))
             store.addReservation(this);
+    }
+
+    // 연관 관계 설정 - 사용자
+    public void updateUser(User user) {
+        this.user = user;
+        // 무한 루프에 빠지지 않기 위해 작성
+        if(!user.getReservations().contains(this))
+            user.addReservation(this);
     }
 
     // status 값이 있어야 할듯 - 방문예정 / 방문완료 / 취소&노쇼

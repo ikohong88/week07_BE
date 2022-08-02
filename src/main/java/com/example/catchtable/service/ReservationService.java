@@ -28,12 +28,16 @@ public class ReservationService {
 
     // 예약하기
     @Transactional
-    public RestApi createReservation(ReservationRequestDto requestDto, Long storeId) {
+    public RestApi createReservation(ReservationRequestDto requestDto, Long storeId, String userId) {
         Store store = storeRepository.findById(storeId).orElseThrow(
                 () -> new IllegalArgumentException("점포를 찾을수가 없습니다.")
         );
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new IllegalArgumentException("사용자를 찾을수가 없습니다.")
+        );
         Reservation reservation = new Reservation(requestDto);
         store.addReservation(reservation);
+        user.addReservation(reservation);
         reservationRepository.save(reservation);
 
         String Message = "예약되었습니다.";

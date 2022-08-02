@@ -25,8 +25,13 @@ public class ReservationController {
 
     // 예약 하기
     @PostMapping("/api/reservation/store/{storeId}")
-    public RestApi postReservation(@RequestBody ReservationRequestDto requestDto, @PathVariable Long storeId) {
-        return reservationService.createReservation(requestDto, storeId);
+    public RestApi postReservation(@RequestBody ReservationRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails ,@PathVariable Long storeId) {
+        System.out.println("userDetails = " + userDetails);
+        if(userDetails == null) {
+            throw new IllegalArgumentException("로그인이 필요한 기능입니다.");
+        }
+        String userId = userDetails.getUser().getId();
+        return reservationService.createReservation(requestDto, storeId, userId);
     }
 
     // 사용자 그동안 예약 목록 불러오기 //

@@ -16,4 +16,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByStoreOrderByCreatedAtDesc(Store sotre);
 
     Page<Review> findAllByUser(User user, Pageable pageable);
+
+    // 가게의 평균 평점 계산을 위한 rate 조회
+    List<Review> findByStoreOrderByRate(Store store);
 }
+
