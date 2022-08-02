@@ -92,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("POST,/api/login");
         skipPathList.add("POST,/api/signup");
 
-        skipPathList.add("GET,/");
+        skipPathList.add("GET,//api/users/**");
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
@@ -146,7 +146,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //          // 허용할 Http Method
 //        configuration.addAllowedMethod("*");
 
-//          // 사용자 자격 증명이 지원되는지 여부입
+//          // 사용자 자격 증명이 지원되는지 여부
 //        configuration.setAllowCredentials(true);
 //
 //        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
