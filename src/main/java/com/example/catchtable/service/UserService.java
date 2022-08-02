@@ -5,6 +5,7 @@ import com.example.catchtable.dto.user.MyPageUpdateDto;
 import com.example.catchtable.dto.user.SignUpRequestDto;
 import com.example.catchtable.model.User;
 import com.example.catchtable.repository.UserRepository;
+import com.example.catchtable.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class UserService {
         String pw = passwordEncoder.encode(requestDto.getPw());
         String username = requestDto.getUsername();
 
-        User user =new User(id, pw, username, "ROLE_USER");
+        User user = new User(id, pw, username, "ROLE_USER");
         if (userRepository.findById(id).isPresent()){
             throw new IllegalArgumentException("이미 존재하는 아이디 입니다.");
         }
@@ -71,9 +72,11 @@ public class UserService {
 
 
     // 회원 탈퇴
-//    public ResponseEntity<?> deleteUser(UserRepository repository) {
-//
-//    }
+    @Transactional
+    public ResponseEntity<?> delete(UserDetailsImpl userDetails) {
+        userRepository.deleteById(userDetails.getUser().getId());
+        return new ResponseEntity<>("회원탈퇴",HttpStatus.OK );
+    }
 
 
 
