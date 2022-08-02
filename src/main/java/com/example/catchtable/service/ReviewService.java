@@ -9,6 +9,10 @@ import com.example.catchtable.repository.ReviewRepository;
 import com.example.catchtable.repository.StoreRepository;
 import com.example.catchtable.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,9 +42,9 @@ public class ReviewService {
                 () -> new NullPointerException("존재하지 않는 가게입니다."));
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 회원입니다."));
-
-        Review review = reviewRequestDto.toEntity();
-        Review saveReview = review.createReview(review, user, store);
+        System.out.println("user : " + user.getId());
+//        Review review = reviewRequestDto.toEntity();
+        Review saveReview = Review.createReview(reviewRequestDto, user, store);
 
         // 리뷰 저장 및 리턴
         return new ResponseEntity<>(reviewRepository.save(saveReview), HttpStatus.valueOf(200));
@@ -48,20 +53,47 @@ public class ReviewService {
     /**
      *  (사용자) 리뷰 목록
      */
-    public List<ReviewResponseDto> getUserReviews(String userId) {
+//    public List<ReviewResponseDto> getUserReviews(String userId) {
+//        // 사용자 확인
+//        User user = userRepository.findById(userId).orElseThrow(
+//                () -> new NullPointerException("존재하지 않는 회원입니다."));
+//
+//        List<ReviewResponseDto> reviewResponseDtos = new ArrayList<>();
+//
+//        // 사용자 작성한 리뷰 가져오기
+//        List<Review> myReviews = reviewRepository.findByUserOrderByCreatedAtDesc(user);
+//        for (Review myReview : myReviews) {
+//            ReviewResponseDto reviewResponseDto = new ReviewResponseDto(myReview);
+//            reviewResponseDtos.add(reviewResponseDto);
+//        }
+//        return reviewResponseDtos;
+//    }
+
+    public List<ReviewResponseDto> getUserReviewsss(String userId, int page, int size, String sortBy, boolean isAsc) {
         // 사용자 확인
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 회원입니다."));
 
+        // ----------------------페이징 처리-------------------------//
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        // Pageable pageable2 = new PageRequest(page, size, sort); 우리에겐 이 형태가 익숙하지만
+        // static 함수(=of)를 사용해서 필요인자를 받아서 new를 해준다.
+        // --------------------------------------------------------//
+
         List<ReviewResponseDto> reviewResponseDtos = new ArrayList<>();
 
         // 사용자 작성한 리뷰 가져오기
-        List<Review> myReviews = reviewRepository.findByUserOrderByCreatedAtDesc(user);
+        Page<Review> myReviews = reviewRepository.findByUserOrderByCreatedAtDesc(user, pageable);
         for (Review myReview : myReviews) {
             ReviewResponseDto reviewResponseDto = new ReviewResponseDto(myReview);
             reviewResponseDtos.add(reviewResponseDto);
         }
+//      return  reviewResponseDtos = reviewRepository.findByUserOrderByCreatedAtDesc(user, pageable).stream()
+//                .map(myReview -> new ReviewResponseDto(myReview)).collect(Collectors.toList());
         return reviewResponseDtos;
+
     }
 
     /**
