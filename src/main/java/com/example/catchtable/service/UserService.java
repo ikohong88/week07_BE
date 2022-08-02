@@ -63,7 +63,7 @@ public class UserService {
     }
 
     // ID 중복확인
-    public ResponseEntity<?> users(String checkDto) {
+    public ResponseEntity<?> usersIdCheck(String checkDto) {
         if (userRepository.findById(checkDto).isPresent())
             return new ResponseEntity<>("중복된 ID입니다" , HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>("사용가능한 ID입니다", HttpStatus.OK);
@@ -73,10 +73,11 @@ public class UserService {
 
     // 회원 탈퇴
     @Transactional
-    public ResponseEntity<?> delete(UserDetailsImpl userDetails) {
+    public ResponseEntity<?> deleteUser(UserDetailsImpl userDetails) {
         userRepository.deleteById(userDetails.getUser().getId());
         return new ResponseEntity<>("회원탈퇴",HttpStatus.OK );
     }
+
 
 
 

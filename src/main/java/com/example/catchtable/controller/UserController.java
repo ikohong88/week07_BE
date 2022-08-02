@@ -37,8 +37,8 @@ public class UserController {
 
     // 회원가입 - ID 중복체크
     @GetMapping("/api/users/{id}")
-    public ResponseEntity<?>users(@PathVariable String id) {
-        return userService.users(id);
+    public ResponseEntity<?>usersIdCheck(@PathVariable String id) {
+        return userService.usersIdCheck(id);
     }
 
 
@@ -48,8 +48,8 @@ public class UserController {
 
     // 회원 탈퇴
     @DeleteMapping("/api/users")
-    public ResponseEntity<?> delete(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-       userService.delete(userDetails);
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+       userService.deleteUser(userDetails);
        return new ResponseEntity<>("회원 탈퇴", HttpStatus.valueOf(201));
     }
 
