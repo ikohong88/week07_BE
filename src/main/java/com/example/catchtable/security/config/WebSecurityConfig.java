@@ -24,12 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JWTAuthProvider jwtAuthProvider;
     private final HeaderTokenExtractor headerTokenExtractor;
+    private final JWTAuthProvider jwtAuthProvider;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -96,8 +96,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 회원가입 허용
         skipPathList.add("GET,/api/users/**");
 
-        // 회원 탈퇴 허용
-
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
@@ -106,6 +104,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         );
 
         JwtAuthFilter filter = new JwtAuthFilter(matcher, headerTokenExtractor);
+
         filter.setAuthenticationManager(super.authenticationManagerBean());
 
         return filter;
