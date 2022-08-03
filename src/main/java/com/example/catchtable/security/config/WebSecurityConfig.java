@@ -1,5 +1,7 @@
-package com.example.catchtable.security;
+package com.example.catchtable.security.config;
 
+import com.example.catchtable.security.FilterSkipMatcher;
+import com.example.catchtable.security.FormLoginSuccessHandler;
 import com.example.catchtable.security.filter.FormLoginFilter;
 import com.example.catchtable.security.filter.JwtAuthFilter;
 import com.example.catchtable.security.jwt.HeaderTokenExtractor;
@@ -22,12 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JWTAuthProvider jwtAuthProvider;
     private final HeaderTokenExtractor headerTokenExtractor;
+    private final JWTAuthProvider jwtAuthProvider;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -86,10 +88,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthFilter jwtFilter() throws Exception {
         List<String> skipPathList = new ArrayList<>();
 
-        skipPathList.add("POST,/api/signup");
+        // 로그인, 중복체크 허용
+        skipPathList.add("POST,/api/login");
         skipPathList.add("POST,/api/signin");
+        skipPathList.add("POST,/api/signup");
 
-        skipPathList.add("GET,/**");
+        // 회원가입 허용
+        skipPathList.add("GET,/api/users/**");
+
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
@@ -98,6 +104,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         );
 
         JwtAuthFilter filter = new JwtAuthFilter(matcher, headerTokenExtractor);
+
         filter.setAuthenticationManager(super.authenticationManagerBean());
 
         return filter;
@@ -108,4 +115,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
-}
+
+
+
+    // cors 허용
+    // 3000번 허용
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//
+//        configuration.addAllowedOrigin("http://localhost:3000");
+//        configuration.addAllowedOrigin("http://togetherheyyo.s3-website.ap-northeast-2.amazonaws.com/");
+//        configuration.addAllowedOriginPattern("*");
+//        configuration.addAllowedHeader("*");
+//        configuration.addAllowedMethod("*");
+//        configuration.setAllowCredentials(true);
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+
+    }
+
+
