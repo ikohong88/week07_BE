@@ -75,7 +75,16 @@ public class StoreService {
         }
         List<StoreResponseDto> result = new ArrayList<>();
         for(Store store : stores) {
-            StoreResponseDto responseDto = new StoreResponseDto(store, averageReviewScore(store),reviewCount(store));
+            // 가게 이미지
+            List<StoreImageURL> storeImageURLS = store.getStoreImageURLS();
+            List<StoreImageDto> storeImageDtos = new ArrayList<>();
+            if(storeImageURLS.size() > 0) {
+                for(StoreImageURL storeImageURL : storeImageURLS) {
+                    StoreImageDto storeImageDto = new StoreImageDto(storeImageURL);
+                    storeImageDtos.add(storeImageDto);
+                }
+            }
+            StoreResponseDto responseDto = new StoreResponseDto(store, averageReviewScore(store),reviewCount(store), storeImageDtos);
             result.add(responseDto);
         }
         return result;
