@@ -1,9 +1,7 @@
 package com.example.catchtable.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.catchtable.dto.store.StoreResponseDto;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ public class Store {
     private String region;
     private String launchPrice;
     private String dinnerPrice;
-    private Integer phone;
+    private String phone;
     private String description;
     private Float lat; // 위도
     private Float lng; // 경도
@@ -74,5 +72,19 @@ public class Store {
         // 무한 후프에 빠지지 않기 위해서 작성
         if(review.getStore()!=this)
             review.updateStore(this);
+    }
+
+//     예약 더미데이터 생성을 위한 코드
+    @Builder
+    public Store(StoreResponseDto storeResponseDto) {
+        this.storename = storeResponseDto.getStorename();
+        this.category = storeResponseDto.getCategory();
+        this.region = storeResponseDto.getRegion();
+        this.launchPrice = storeResponseDto.getLaunchPrice();
+        this.dinnerPrice = storeResponseDto.getDinnerPrice();
+        this.phone = storeResponseDto.getPhone();
+        this.description = storeResponseDto.getDescription();
+        this.lat = storeResponseDto.getLat();
+        this.lng = storeResponseDto.getLng();
     }
 }
