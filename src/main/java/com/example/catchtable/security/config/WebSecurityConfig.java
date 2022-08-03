@@ -67,6 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(jwtAuthProvider);
     }
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -83,6 +85,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .anyRequest().permitAll();
+
+//        특정 페이지가 로그인 없이 접근 가능
+        http.authorizeRequests()
+
+//                인증 절차없이 허용
+                .antMatchers("/rest/api/**").permitAll()
+
+                .anyRequest().authenticated(); // 나머지는 인증 필요
+
+//               hasAnyRole()을 사용하면 특정 권한
+//              .antMatchers("/rest/admin/**").permitAll("ADMIN");
     }
 
     private JwtAuthFilter jwtFilter() throws Exception {
