@@ -2,9 +2,11 @@ package com.example.catchtable.service;
 
 import com.example.catchtable.dto.review.ReviewRequestDto;
 import com.example.catchtable.dto.review.ReviewResponseDto;
+import com.example.catchtable.model.Image;
 import com.example.catchtable.model.Review;
 import com.example.catchtable.model.Store;
 import com.example.catchtable.model.User;
+import com.example.catchtable.repository.ImageRepository;
 import com.example.catchtable.repository.ReviewRepository;
 import com.example.catchtable.repository.StoreRepository;
 import com.example.catchtable.repository.UserRepository;
@@ -31,23 +33,39 @@ public class ReviewService {
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
+    private final ImageRepository imageRepository;
 
     /**
      *  리뷰 작성
      */
     @Transactional
-    public ResponseEntity<?> registerReview(Long storeId, String userId, ReviewRequestDto reviewRequestDto) {
+    public ResponseEntity<?> registerReviewV1(Long storeId, String userId, ReviewRequestDto reviewRequestDto) {
 
         Store store = storeRepository.findById(storeId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 가게입니다."));
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 회원입니다."));
-        System.out.println("user : " + user.getId());
-//        Review review = reviewRequestDto.toEntity();
-        Review saveReview = Review.createReview(reviewRequestDto, user, store);
+
+        Review review = new Review(reviewRequestDto, user, store);
+        imageRepository.saveAll(review.getImages());
 
         // 리뷰 저장 및 리턴
-        return new ResponseEntity<>(reviewRepository.save(saveReview), HttpStatus.valueOf(200));
+        return new ResponseEntity<>(reviewRepository.save(review), HttpStatus.valueOf(200));
+    }
+
+    @Transactional
+    public Review registerReviewV2(Long storeId, String userId, ReviewRequestDto reviewRequestDto) {
+
+        Store store = storeRepository.findById(storeId).orElseThrow(
+                () -> new NullPointerException("존재하지 않는 가게입니다."));
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new NullPointerException("존재하지 않는 회원입니다."));
+
+        Review review = new Review(reviewRequestDto, user, store);
+        imageRepository.saveAll(review.getImages());
+
+        // 리뷰 저장 및 리턴
+        return reviewRepository.save(review);
     }
 
     /**

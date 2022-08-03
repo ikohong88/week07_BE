@@ -1,8 +1,10 @@
 package com.example.catchtable.controller;
 
+import com.example.catchtable.dto.image.UploadResponseDto;
 import com.example.catchtable.dto.user.MyPageResponseDto;
 import com.example.catchtable.dto.user.MyPageUpdateDto;
 import com.example.catchtable.security.UserDetailsImpl;
+import com.example.catchtable.service.S3Service;
 import com.example.catchtable.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class MyPageController {
 
     private final UserService userService;
+    private final S3Service s3Service;
 
     // 마이페이지  --> OK
     @GetMapping("/api/users")
@@ -37,17 +40,15 @@ public class MyPageController {
     }
 
 
-//    @PostMapping("api/images")
-//    public ResponseEntity<?> uploadImage(@RequestPart(value = "file", required = false) List<MultipartFile> files) throws IOException {
-//        List<String> imgUrls = s3Service.upload(files);
-//        return new ResponseEntity<>(imgUrls, HttpStatus.valueOf(201));
-//    }
-//
-//    @DeleteMapping("api/images")
-//    public ResponseEntity<?> deleteImage(@RequestBody Map<String, String> imgUrlMap){
-//        String imgUrl = imgUrlMap.get("imgUrl");
-//        System.out.println(imgUrl);
-//        s3Service.delete(imgUrl);
-//        return new ResponseEntity<>(HttpStatus.valueOf(204));
-//    }
+    // 이미지 업로드
+    @PostMapping("/api/upload")
+    public List<UploadResponseDto> uploadImage(@RequestPart(value = "file", required = false) List<MultipartFile> files) throws IOException {
+        return s3Service.uploadImage(files);
+    }
+
+    // 이미지 삭제
+    @DeleteMapping("api/images")
+    public List<String> deleteImages(@RequestBody List<String> filenames){
+        return s3Service.deleteImages(filenames);
+    }
 }
