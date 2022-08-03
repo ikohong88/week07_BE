@@ -5,6 +5,7 @@ import com.example.catchtable.dto.RestApi;
 import com.example.catchtable.dto.StoreImageDto;
 import com.example.catchtable.dto.reservation.ReservationResponseDto;
 import com.example.catchtable.dto.review.ReviewResponseDto;
+import com.example.catchtable.dto.store.StoreRequestDto;
 import com.example.catchtable.dto.store.StoreResponseDto;
 import com.example.catchtable.model.Reservation;
 import com.example.catchtable.model.Review;
@@ -161,5 +162,19 @@ public class StoreService {
     public Integer reviewCount(Store store) {
         List<Review> rates = reviewRepository.findByStoreOrderByRate(store);
         return rates.size();
+    }
+
+    // 가게 등록
+    public RestApi registerStore(StoreRequestDto storeRequestDto) {
+        String storename = storeRequestDto.getStorename();
+        if (storeRepository.findByStorename(storename).isPresent()){
+            throw new IllegalArgumentException("이미 존재하는 점포 입니다.");
+        }
+        Store store = new Store(storeRequestDto);
+        storeRepository.save(store);
+
+        String Message = "점포가 등록되었습니다..";
+        HttpStatus httpStatus = HttpStatus.OK;
+        return new RestApi(Message, httpStatus);
     }
 }
