@@ -53,6 +53,12 @@ public class Review extends Timestamped {
         this.store = store;
         store.getReviews().add(this);
     }
+    public void updateStore(Store store) {
+        this.store = store;
+        // 무한 루프에 빠지지 않기 위해 작성
+        if(!store.getReviews().contains(this))
+            store.addReview(this);
+    }
 
     public Review(ReviewRequestDto reviewRequestDto, User user, Store store) {
         this.title = reviewRequestDto.getTitle();
