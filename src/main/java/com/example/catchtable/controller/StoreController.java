@@ -2,6 +2,7 @@ package com.example.catchtable.controller;
 
 import com.example.catchtable.dto.RestApi;
 import com.example.catchtable.dto.StoreImageDto;
+import com.example.catchtable.dto.store.StoreRequestDto;
 import com.example.catchtable.dto.store.StoreResponseDto;
 import com.example.catchtable.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,12 @@ public class StoreController {
             @RequestParam @Nullable String maxPrice
             ) {
         return storeService.getStores(filter,sort,word,minPrice,maxPrice);
+    }
+
+    // 가게 등록
+    @PostMapping("/api/stores/register")
+    public RestApi registerStore(@RequestBody StoreRequestDto storeRequestDto) {
+        return storeService.registerStore(storeRequestDto);
     }
 
     // 가게 이미지 등록

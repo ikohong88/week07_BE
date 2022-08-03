@@ -19,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final HeaderTokenExtractor headerTokenExtractor;
     private final JWTAuthProvider jwtAuthProvider;
+    private final CorsConfig corsConfig;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -74,8 +76,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.cors();
         http
+                .addFilterBefore(corsConfig.corsFilter(), SecurityContextPersistenceFilter.class)
                 .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+
+
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -86,16 +91,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .anyRequest().permitAll();
 
-//        특정 페이지가 로그인 없이 접근 가능
-        http.authorizeRequests()
-
-//                인증 절차없이 허용
-                .antMatchers("/rest/api/**").permitAll()
-
-                .anyRequest().authenticated(); // 나머지는 인증 필요
-
-//               hasAnyRole()을 사용하면 특정 권한
-//              .antMatchers("/rest/admin/**").permitAll("ADMIN");
     }
 
     private JwtAuthFilter jwtFilter() throws Exception {
@@ -108,6 +103,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 회원가입 허용
         skipPathList.add("GET,/api/users/**");
+
+        // 로그인 없이 페이지 허용
+        skipPathList.add("GET,/api/**");
+        skipPathList.add("GET,/**");
 
 
 

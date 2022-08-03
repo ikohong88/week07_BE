@@ -1,5 +1,6 @@
 package com.example.catchtable.model;
 
+import com.example.catchtable.dto.store.StoreRequestDto;
 import com.example.catchtable.dto.store.StoreResponseDto;
 import lombok.*;
 
@@ -86,5 +87,17 @@ public class Store {
         this.description = storeResponseDto.getDescription();
         this.lat = storeResponseDto.getLat();
         this.lng = storeResponseDto.getLng();
+    }
+
+    public Store(StoreRequestDto storeRequestDto) {
+        this.storename = storeRequestDto.getStorename();
+        this.category = storeRequestDto.getCategory();
+        this.region = storeRequestDto.getRegion();
+        this.launchPrice = storeRequestDto.getLaunchPrice();
+        this.dinnerPrice = storeRequestDto.getDinnerPrice();
+        this.phone = storeRequestDto.getPhone();
+        this.description = storeRequestDto.getDescription();
+        this.lat = storeRequestDto.getLat();
+        this.lng = storeRequestDto.getLng();
     }
 }

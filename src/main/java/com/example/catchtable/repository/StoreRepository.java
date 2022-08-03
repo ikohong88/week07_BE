@@ -28,4 +28,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     // minPrice, maxPrice 사이값 조회 - 가게의 minPrice, maxPrice값이 없으므로 사용할 필요가 없어짐
 //    List<Store> findAllByIdBetween(Integer minPrice, Integer maxPrice);
     Optional<Store> findById(Long id);
+
+    // 점포 조회
+    Optional<Store> findByStorename(String storename);
 }
