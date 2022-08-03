@@ -20,7 +20,7 @@ public class CorsConfig {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("http://localhost:8080");
-        config.addAllowedOrigin("https://s3.ap-northeast-2.amazonaws.com/applesong");
+        config.addAllowedOrigin("https://s3.ap-northeast-2.amazonaws.com");
         config.addAllowedHeader("*");
 
 
