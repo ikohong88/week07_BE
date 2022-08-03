@@ -8,12 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class StoreResponseDto {
 
     private Long id;
@@ -24,7 +26,7 @@ public class StoreResponseDto {
     private String region;
     private String launchPrice;
     private String dinnerPrice;
-    private Integer phone;
+    private String phone;
     private String description;
     private Float lat; // 위도
     private Float lng; // 경도 - long은 예약어라 사용 불가능?

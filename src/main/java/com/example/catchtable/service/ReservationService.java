@@ -14,7 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,6 +39,15 @@ public class ReservationService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("사용자를 찾을수가 없습니다.")
         );
+//        타임존시간차이로 하단 코드를 사용할려 했으니, response 할 경우, 다시 9시간 차이로 일단 보류
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//        Date date = null;
+//        try {
+//            date = df.parse(requestDto.getDate());
+//        } catch (ParseException e) {
+//            throw new IllegalArgumentException("양식이 맞지 않습니다. : `yyyy-MM-dd HH:mm`");
+//        }`
+
         Reservation reservation = new Reservation(requestDto);
         store.addReservation(reservation);
         user.addReservation(reservation);
