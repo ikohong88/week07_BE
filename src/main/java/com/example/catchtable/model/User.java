@@ -20,7 +20,7 @@ public class User extends Timestamped{
     @Column(name = "user_id",nullable = false, unique = true) // 이건가? 생각하고있습니다
     private String id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
@@ -61,5 +61,13 @@ public class User extends Timestamped{
         this.birth = myPageUpdateDto.getBirth();
         this.priceMin = myPageUpdateDto.getPriceMin();
         this.priceMax = myPageUpdateDto.getPriceMax();
+    }
+
+    // 예약 연관관계
+    public void addReservation(Reservation reservation) {
+        this.reservations.add(reservation);
+        // 무한 후프에 빠지지 않기 위해서 작성
+        if(reservation.getUser()!=this)
+            reservation.updateUser(this);
     }
 }

@@ -17,7 +17,7 @@ public class StoreImageURL {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000) // 주소길이가 너무 길어 넣지 못하는 상황 발생
     private String imagePath;
 
     // store_id 외래키가 존재함으로, Store,Reservation 의 주인이라 보면 된디.
