@@ -38,7 +38,7 @@ public class Reservation extends Timestamped{
 //    private Long storeId;
 
     @Column(columnDefinition="TIMESTAMP")
-    private Date date;
+    private String date;
 
     @Column(nullable = false)
     private Integer members;

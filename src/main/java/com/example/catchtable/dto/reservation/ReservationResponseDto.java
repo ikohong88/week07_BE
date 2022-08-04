@@ -20,7 +20,7 @@ public class ReservationResponseDto {
     private String username;
     private String storename;
 
-    private Date date;
+    private String date;
     private Integer members; // member? members?
 
     public ReservationResponseDto(Reservation reservation) {
