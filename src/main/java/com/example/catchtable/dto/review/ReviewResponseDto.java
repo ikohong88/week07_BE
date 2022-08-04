@@ -19,8 +19,7 @@ public class ReviewResponseDto {
     private String title;
     private String content;
     private Float rate;
-
-    private List<String> images;
+    private List<String> image;
     private LocalDateTime createdAt;
 
 
@@ -31,7 +30,7 @@ public class ReviewResponseDto {
         this.title = myReview.getTitle();
         this.content = myReview.getContent();
         this.rate = myReview.getRate();
-        this.images = myReview.getImages().stream()
+        this.image = myReview.getImages().stream()
                                         .map(Image::getUrl)
                                         .collect(Collectors.toList());
         this.createdAt = myReview.getCreatedAt();

@@ -60,8 +60,9 @@ public class ReviewService {
                 () -> new NullPointerException("존재하지 않는 가게입니다."));
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 회원입니다."));
-
+        // 리뷰 생성
         Review review = new Review(reviewRequestDto, user, store);
+        // 이미지 원본 이름, URL 저장
         imageRepository.saveAll(review.getImages());
 
         // 리뷰 저장 및 리턴

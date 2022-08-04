@@ -27,6 +27,7 @@ public class MyPageController {
     // 마이페이지  --> OK
     @GetMapping("/api/users")
     public MyPageResponseDto getMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        System.out.println("userDetails.getUsername() :" + userDetails.getUsername());
         String userId = userDetails.getUser().getId();
         return userService.getMyPage(userId);
     }
@@ -47,7 +48,7 @@ public class MyPageController {
     }
 
     // 이미지 삭제
-    @DeleteMapping("api/images")
+    @DeleteMapping("/api/images")
     public List<String> deleteImages(@RequestBody List<String> filenames){
         return s3Service.deleteImages(filenames);
     }

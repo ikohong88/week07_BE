@@ -116,9 +116,10 @@ public class ReservationService {
      * (사용자) 예약 상세보기
      */
     public ReservationResponseDto getReservationDtl(Long reservationId, String userId) {
+        System.out.println();
         // 예약 확인
         Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(
-                () -> new NullPointerException("존재하지 않는 회원입니다."));
+                () -> new NullPointerException("존재하지 않는 가게입니다."));
         return new ReservationResponseDto(reservation);
     }
 
