@@ -72,48 +72,48 @@ public class ReviewService {
     /**
      *  (사용자) 리뷰 목록
      */
-//    public List<ReviewResponseDto> getUserReviews(String userId) {
-//        // 사용자 확인
-//        User user = userRepository.findById(userId).orElseThrow(
-//                () -> new NullPointerException("존재하지 않는 회원입니다."));
-//
-//        List<ReviewResponseDto> reviewResponseDtos = new ArrayList<>();
-//
-//        // 사용자 작성한 리뷰 가져오기
-//        List<Review> myReviews = reviewRepository.findByUserOrderByCreatedAtDesc(user);
-//        for (Review myReview : myReviews) {
-//            ReviewResponseDto reviewResponseDto = new ReviewResponseDto(myReview);
-//            reviewResponseDtos.add(reviewResponseDto);
-//        }
-//        return reviewResponseDtos;
-//    }
-
-    public List<ReviewResponseDto> getUserReviewsss(String userId, int page, int size, String sortBy, boolean isAsc) {
+    public List<ReviewResponseDto> getUserReviews(String userId) {
         // 사용자 확인
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 회원입니다."));
 
-        // ----------------------페이징 처리-------------------------//
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Sort sort = Sort.by(direction, sortBy);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        // Pageable pageable2 = new PageRequest(page, size, sort); 우리에겐 이 형태가 익숙하지만
-        // static 함수(=of)를 사용해서 필요인자를 받아서 new를 해준다.
-        // --------------------------------------------------------//
-
         List<ReviewResponseDto> reviewResponseDtos = new ArrayList<>();
 
         // 사용자 작성한 리뷰 가져오기
-        Page<Review> myReviews = reviewRepository.findByUserOrderByCreatedAtDesc(user, pageable);
+        List<Review> myReviews = reviewRepository.findByUserOrderByCreatedAtDesc(user);
         for (Review myReview : myReviews) {
             ReviewResponseDto reviewResponseDto = new ReviewResponseDto(myReview);
             reviewResponseDtos.add(reviewResponseDto);
         }
-//      return  reviewResponseDtos = reviewRepository.findByUserOrderByCreatedAtDesc(user, pageable).stream()
-//                .map(myReview -> new ReviewResponseDto(myReview)).collect(Collectors.toList());
         return reviewResponseDtos;
-
     }
+
+//    public List<ReviewResponseDto> getUserReviewsss(String userId, int page, int size, String sortBy, boolean isAsc) {
+//        // 사용자 확인
+//        User user = userRepository.findById(userId).orElseThrow(
+//                () -> new NullPointerException("존재하지 않는 회원입니다."));
+//
+//        // ----------------------페이징 처리-------------------------//
+//        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+//        Sort sort = Sort.by(direction, sortBy);
+//        Pageable pageable = PageRequest.of(page, size, sort);
+//        // Pageable pageable2 = new PageRequest(page, size, sort); 우리에겐 이 형태가 익숙하지만
+//        // static 함수(=of)를 사용해서 필요인자를 받아서 new를 해준다.
+//        // --------------------------------------------------------//
+//
+//        List<ReviewResponseDto> reviewResponseDtos = new ArrayList<>();
+//
+//        // 사용자 작성한 리뷰 가져오기
+//        Page<Review> myReviews = reviewRepository.findByUserOrderByCreatedAtDesc(user, pageable);
+//        for (Review myReview : myReviews) {
+//            ReviewResponseDto reviewResponseDto = new ReviewResponseDto(myReview);
+//            reviewResponseDtos.add(reviewResponseDto);
+//        }
+////      return  reviewResponseDtos = reviewRepository.findByUserOrderByCreatedAtDesc(user, pageable).stream()
+////                .map(myReview -> new ReviewResponseDto(myReview)).collect(Collectors.toList());
+//        return reviewResponseDtos;
+
+//    }
 
     /**
      *  (가게) 리뷰 목록

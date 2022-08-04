@@ -42,8 +42,6 @@ public class Review extends Timestamped {
     @OneToMany(mappedBy = "review")
     private List<Image> images;
 
-//    private List<String> images; // String 으로 바꿀때
-
     //== 연관관계 (편의) 메서드==// 양방향 연관관계 세팅을 까먹지않고 할수있는 장점
 
     public void setUser(User user) {
@@ -65,10 +63,10 @@ public class Review extends Timestamped {
         this.title = reviewRequestDto.getTitle();
         this.content = reviewRequestDto.getContent();
         this.rate = reviewRequestDto.getRate();
-        this.images = reviewRequestDto.getImages().stream()
+        this.images = reviewRequestDto.getImage().stream()
                 .map((image) -> new Image(image, this))
                 .collect(Collectors.toList());
-//        this.images = reviewRequestDto.getImages();
+//        this.images = reviewRequestDto.getImage();
         setUser(user);
         setStore(store);
     }
@@ -89,7 +87,7 @@ public class Review extends Timestamped {
                 .title(reviewRequestDto.getTitle())
                 .content(reviewRequestDto.getContent())
                 .rate(reviewRequestDto.getRate())
-                .images(reviewRequestDto.getImages().stream()
+                .images(reviewRequestDto.getImage().stream()
                         .map((image) -> new Image(image, this))
                         .collect(Collectors.toList()))
                 .user(user)

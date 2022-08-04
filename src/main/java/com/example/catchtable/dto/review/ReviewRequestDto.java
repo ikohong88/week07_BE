@@ -24,10 +24,7 @@ public class ReviewRequestDto {
    @NotBlank(message = "1~5 사이의 별점을 입력해 주세요")
    private Float rate;     // 평점
 
-   private List<ImageRequestDto> images;
-
-//   private List<String> images;   url만 보낼 시 이렇게 수정하자.
-
+   private List<ImageRequestDto> image;
 
    public Review toEntity() {
       return Review.builder()

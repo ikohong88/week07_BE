@@ -25,7 +25,6 @@ public class FormLoginAuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
         // FormLoginFilter 에서 생성된 토큰으로부터 아이디와 비밀번호를 조회함
-        System.out.println("token.getName() : " + token.getName()); // 로그인하면 id값을 받아오긴 한다.
         String username = token.getName();
         String password = (String) token.getCredentials();
 

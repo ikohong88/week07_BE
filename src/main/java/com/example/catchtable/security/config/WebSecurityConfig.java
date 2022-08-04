@@ -20,6 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.web.cors.CorsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,24 +105,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         List<String> skipPathList = new ArrayList<>();
 
         //==로그인, 중복체크 허용==//
-        skipPathList.add("POST,/api/login");                //로그인 ?
-        skipPathList.add("POST,/api/signin");               //로그인 ?
+        skipPathList.add("POST,/api/login");                //로그인
+        skipPathList.add("POST,/api/signin");               //로그인
         skipPathList.add("POST,/api/signup");               //회원가입
-//        skipPathList.add("POST,/api/review/stores/**");     //리뷰작성
-//        skipPathList.add("POST,/api/reservation/store/**"); //예약하기
-//        skipPathList.add("POST,/api/upload/**");            // 이미지 업로드
 
-
-        skipPathList.add("GET,/api/users/{}");          // ID 중복체크
+        skipPathList.add("GET,/api/checkUser/{id}");          // ID 중복체크
         skipPathList.add("GET,/api/stores/**");         // 마이페이지, 가게상세 게시판
         skipPathList.add("GET,/api/reviews/**");        // 유저의 예약정보
-//        skipPathList.add("GET,/api/users/reivews/**");  // 유저의 리뷰정보
         skipPathList.add("GET,/api/users/reviews");  // 유저의 리뷰정보
-//        skipPathList.add("GET,/api/images/**");         // S3
 
         skipPathList.add("GET,/");
-
-
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
                 skipPathList,

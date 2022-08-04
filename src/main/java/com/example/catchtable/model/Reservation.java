@@ -37,7 +37,7 @@ public class Reservation extends Timestamped{
 //    @Column(name = "STORE_ID", insertable = false, updatable = false)
 //    private Long storeId;
 
-    @Column(columnDefinition="TIMESTAMP")
+    @Column()
     private String date;
 
     @Column(nullable = false)
@@ -64,7 +64,4 @@ public class Reservation extends Timestamped{
         if(!user.getReservations().contains(this))
             user.addReservation(this);
     }
-
-    // status 값이 있어야 할듯 - 방문예정 / 방문완료 / 취소&노쇼
-    // 시간은 어떻게 ? 그냥 예약하면 예약하기로 ?
 }

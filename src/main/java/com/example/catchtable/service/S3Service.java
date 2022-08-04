@@ -27,7 +27,7 @@ public class S3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public List<UploadResponseDto> uploadImage(List<MultipartFile> files) {
+    public List<UploadResponseDto> uploadImageV1(List<MultipartFile> files) {
         // 응답 리스트
         List<UploadResponseDto> responseDtos = new ArrayList<>();
 
@@ -44,6 +44,27 @@ public class S3Service {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드 중 문제가 발생했습니다");
             }
             responseDtos.add(new UploadResponseDto(amazonS3.getUrl(bucket, filename).toString(), filename));
+        }
+        return responseDtos;
+    }
+
+    public List<String> uploadImageV2(List<MultipartFile> files) {
+        // 응답 리스트
+        List<String> responseDtos = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(file.getContentType());
+            try {
+                // 이미지 업로드
+                PutObjectRequest por = new PutObjectRequest(bucket, filename, file.getInputStream(), metadata)
+                        .withCannedAcl(CannedAccessControlList.PublicRead);
+                amazonS3.putObject(por);
+            } catch (Exception e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드 중 문제가 발생했습니다");
+            }
+            responseDtos.add((amazonS3.getUrl(bucket, filename).toString()));
         }
         return responseDtos;
     }

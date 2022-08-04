@@ -1,12 +1,12 @@
 package com.example.catchtable.dto.review;
 
-import com.example.catchtable.dto.ImageResponseDto;
 import com.example.catchtable.model.Image;
 import com.example.catchtable.model.Review;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,8 +1,6 @@
 package com.example.catchtable.controller;
 
-import com.example.catchtable.dto.review.ReviewRequestDto;
 import com.example.catchtable.dto.user.SignUpRequestDto;
-import com.example.catchtable.model.User;
 import com.example.catchtable.repository.UserRepository;
 import com.example.catchtable.security.UserDetailsImpl;
 import com.example.catchtable.service.UserService;
@@ -12,8 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 public class UserController {
@@ -36,7 +32,7 @@ public class UserController {
 
 
     // 회원가입 - ID 중복체크
-    @GetMapping("/api/users/{id}")
+    @GetMapping("/api/checkUser/{id}")
     public ResponseEntity<?>usersIdCheck(@PathVariable String id) {
         return userService.usersIdCheck(id);
     }

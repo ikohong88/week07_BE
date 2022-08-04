@@ -15,7 +15,7 @@ import java.util.Date;
 public class ReservationRequestDto {
 
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") //데이터 포맷 변환
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX") //데이터 포맷 변환
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") //데이터 포맷 변환
     private String date;
 
     private Integer members;

@@ -27,12 +27,11 @@ public class MyPageController {
     // 마이페이지  --> OK
     @GetMapping("/api/users")
     public MyPageResponseDto getMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        System.out.println("userDetails.getUsername() :" + userDetails.getUsername());
         String userId = userDetails.getUser().getId();
         return userService.getMyPage(userId);
     }
 
-    // 유저정보 수정 --> OK --> validation 설정해야함
+    // 유저정보 수정
     @PatchMapping("/api/users")
     public MyPageResponseDto updateMyPage(@RequestBody MyPageUpdateDto myPageUpdateDto,
                                           @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -41,10 +40,16 @@ public class MyPageController {
     }
 
 
-    // 이미지 업로드
+    // 이미지 업로드 V1 - List<UploadResponseDto>
+    @PostMapping("/api/upload2")
+    public List<UploadResponseDto> uploadImageV1(@RequestPart(value = "file", required = false) List<MultipartFile> files) throws IOException {
+        return s3Service.uploadImageV1(files);
+    }
+
+    // 이미지 업로드 V2 - List<String>
     @PostMapping("/api/upload")
-    public List<UploadResponseDto> uploadImage(@RequestPart(value = "file", required = false) List<MultipartFile> files) throws IOException {
-        return s3Service.uploadImage(files);
+    public List<String> uploadImageV2(@RequestPart(value = "file", required = false) List<MultipartFile> files) throws IOException {
+        return s3Service.uploadImageV2(files);
     }
 
     // 이미지 삭제
