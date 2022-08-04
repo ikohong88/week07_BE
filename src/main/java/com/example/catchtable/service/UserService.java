@@ -42,6 +42,7 @@ public class UserService {
         // 사용자 확인
         User foundUer = userRepository.findById(userId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 사용자입니다"));
+
         // 사용자 데이터 정보 업데이트
         foundUer.updateUser(myPageUpdateDto);
 

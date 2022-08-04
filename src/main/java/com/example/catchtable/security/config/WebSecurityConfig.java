@@ -20,6 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.web.cors.CorsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,10 +81,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
-
         http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers("/api/signup").permitAll()
+                .antMatchers("/api/login").permitAll()
+                .anyRequest()
+                .permitAll()
                 .and()
+                // 로그아웃
                 .logout()
                 .logoutUrl("/user/logout")
                 .permitAll()
@@ -96,19 +104,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthFilter jwtFilter() throws Exception {
         List<String> skipPathList = new ArrayList<>();
 
-        // 로그인, 중복체크 허용
-        skipPathList.add("POST,/api/login");
-        skipPathList.add("POST,/api/signin");
-        skipPathList.add("POST,/api/signup");
+        //==로그인, 중복체크 허용==//
+        skipPathList.add("POST,/api/login");                //로그인
+        skipPathList.add("POST,/api/signin");               //로그인
+        skipPathList.add("POST,/api/signup");               //회원가입
 
-        // 회원가입 허용
-        skipPathList.add("GET,/api/users/**");
+        skipPathList.add("GET,/api/checkUser/{id}");          // ID 중복체크
+        skipPathList.add("GET,/api/stores/**");         // 마이페이지, 가게상세 게시판
+        skipPathList.add("GET,/api/reviews/**");        // 유저의 예약정보
+        skipPathList.add("GET,/api/users/reviews");  // 유저의 리뷰정보
 
-        // 로그인 없이 페이지 허용
-        skipPathList.add("GET,/api/**");
-        skipPathList.add("GET,/**");
-
-
+        skipPathList.add("GET,/");
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
                 skipPathList,

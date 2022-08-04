@@ -1,8 +1,10 @@
 package com.example.catchtable.controller;
 
+import com.example.catchtable.dto.image.UploadResponseDto;
 import com.example.catchtable.dto.user.MyPageResponseDto;
 import com.example.catchtable.dto.user.MyPageUpdateDto;
 import com.example.catchtable.security.UserDetailsImpl;
+import com.example.catchtable.service.S3Service;
 import com.example.catchtable.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class MyPageController {
 
     private final UserService userService;
+    private final S3Service s3Service;
 
     // 마이페이지  --> OK
     @GetMapping("/api/users")
@@ -28,7 +31,7 @@ public class MyPageController {
         return userService.getMyPage(userId);
     }
 
-    // 유저정보 수정 --> OK --> validation 설정해야함
+    // 유저정보 수정
     @PatchMapping("/api/users")
     public MyPageResponseDto updateMyPage(@RequestBody MyPageUpdateDto myPageUpdateDto,
                                           @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -37,17 +40,21 @@ public class MyPageController {
     }
 
 
-//    @PostMapping("api/images")
-//    public ResponseEntity<?> uploadImage(@RequestPart(value = "file", required = false) List<MultipartFile> files) throws IOException {
-//        List<String> imgUrls = s3Service.upload(files);
-//        return new ResponseEntity<>(imgUrls, HttpStatus.valueOf(201));
-//    }
-//
-//    @DeleteMapping("api/images")
-//    public ResponseEntity<?> deleteImage(@RequestBody Map<String, String> imgUrlMap){
-//        String imgUrl = imgUrlMap.get("imgUrl");
-//        System.out.println(imgUrl);
-//        s3Service.delete(imgUrl);
-//        return new ResponseEntity<>(HttpStatus.valueOf(204));
-//    }
+    // 이미지 업로드 V1 - List<UploadResponseDto>
+    @PostMapping("/api/upload2")
+    public List<UploadResponseDto> uploadImageV1(@RequestPart(value = "file", required = false) List<MultipartFile> files) throws IOException {
+        return s3Service.uploadImageV1(files);
+    }
+
+    // 이미지 업로드 V2 - List<String>
+    @PostMapping("/api/upload")
+    public List<String> uploadImageV2(@RequestPart(value = "file", required = false) List<MultipartFile> files) throws IOException {
+        return s3Service.uploadImageV2(files);
+    }
+
+    // 이미지 삭제
+    @DeleteMapping("/api/images")
+    public List<String> deleteImages(@RequestBody List<String> filenames){
+        return s3Service.deleteImages(filenames);
+    }
 }

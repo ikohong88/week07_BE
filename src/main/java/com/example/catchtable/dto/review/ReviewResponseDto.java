@@ -1,10 +1,14 @@
 package com.example.catchtable.dto.review;
 
+import com.example.catchtable.model.Image;
 import com.example.catchtable.model.Review;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -15,8 +19,7 @@ public class ReviewResponseDto {
     private String title;
     private String content;
     private Float rate;
-
-    //    private List<ImageResponseDto> images;
+    private List<String> image;
     private LocalDateTime createdAt;
 
 
@@ -27,19 +30,9 @@ public class ReviewResponseDto {
         this.title = myReview.getTitle();
         this.content = myReview.getContent();
         this.rate = myReview.getRate();
+        this.image = myReview.getImages().stream()
+                                        .map(Image::getUrl)
+                                        .collect(Collectors.toList());
         this.createdAt = myReview.getCreatedAt();
     }
-
-//    @Builder --> 이미지 정해지면 이걸로 수정
-//    public ReviewResponseDto(Review myReview, List<ImageResponseDto> images) {
-//        this.id = myReview.getId();
-//        this.storeId = myReview.getStore().getId();
-//        this.storename = myReview.getStore().getStorename();
-//        this.title = myReview.getTitle();
-//        this.content = myReview.getContent();
-//        this.rate = myReview.getRate();
-//        this.createdAt = myReview.getCreatedAt();
-//        this.images = images;
-//    }
-
 }
